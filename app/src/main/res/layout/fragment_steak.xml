@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="16dp"
+    android:orientation="vertical">
+    <TextView
+        style="?android:listSeparatorTextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/steak_name_label"/>
+    <EditText
+        android:id="@+id/steak_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/steak_name_hint"/>
+
+    <TextView
+        style="?android:listSeparatorTextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/steak_address_label"/>
+    <EditText
+        android:id="@+id/steak_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/steak_address_hint"/>
+    <TextView
+        style="?android:listSeparatorTextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/steak_comments_label"/>
+
+    <EditText
+        android:id="@+id/steak_comments"
+        android:layout_width="match_parent"
+        android:layout_height="118dp"
+        android:gravity="top"
+        android:hint="@string/steak_comments_hint" />
+
+    <TextView
+        style="?android:listSeparatorTextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/steak_details_label"/>
+
+    <Button
+        android:id="@+id/steak_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"/>
+    <CheckBox
+        android:id="@+id/steak_recommended"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/steak_recommended_label"/>
+</LinearLayout>
