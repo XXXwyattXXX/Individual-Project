@@ -14,7 +14,8 @@ import androidx.viewpager.widget.ViewPager;
 import java.util.List;
 import java.util.UUID;
 
-public class SteakPagerActivity extends AppCompatActivity {
+public class SteakPagerActivity extends AppCompatActivity
+        implements SteakFragment.Callbacks{
     private static final String EXTRA_STEAK_ID =
             "com.example.steakhouse.steak_id";
 
@@ -31,7 +32,7 @@ public class SteakPagerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_steak_pager);
-        UUID crimeId = (UUID) getIntent()
+        UUID steakId = (UUID) getIntent()
                 .getSerializableExtra(EXTRA_STEAK_ID);
 
         mViewPager = (ViewPager) findViewById(R.id.steak_view_pager);
@@ -49,5 +50,7 @@ public class SteakPagerActivity extends AppCompatActivity {
             }
         });
     }
-
+    @Override
+    public void onSteakUpdated(Steak steak) {
+    }
 }

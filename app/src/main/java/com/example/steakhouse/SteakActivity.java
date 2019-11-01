@@ -15,9 +15,9 @@ public class SteakActivity extends SingleFragmentActivity {
 
     private static final String EXTRA_STEAK_ID =
             "com.example.steakhouse.steak_id";
-    public static Intent newIntent(Context packageContext, UUID crimeId) {
+    public static Intent newIntent(Context packageContext, UUID steakId) {
         Intent intent = new Intent(packageContext, SteakActivity.class);
-        intent.putExtra(EXTRA_STEAK_ID, crimeId);
+        intent.putExtra(EXTRA_STEAK_ID, steakId);
         return intent;
     }
     @Override

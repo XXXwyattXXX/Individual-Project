@@ -1,6 +1,7 @@
 package com.example.steakhouse;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -32,6 +33,13 @@ public class SteakFragment extends Fragment {
     private EditText mCommentsField;
     private Button mDateButton;
     private CheckBox mRecmedCheckBox;
+    private Callbacks mCallbacks;
+    /**
+     * Required interface for hosting activities
+     */
+    public interface Callbacks {
+        void onSteakUpdated(Steak steak);
+    }
 
     public static SteakFragment newInstance(UUID steakId) {
         Bundle args = new Bundle();
@@ -42,10 +50,22 @@ public class SteakFragment extends Fragment {
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mCallbacks = (Callbacks) context;
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         UUID steakId = (UUID) getArguments().getSerializable(ARG_STEAK_ID);
         mSteak = SteakLab.get(getActivity()).getSteak(steakId);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = null;
     }
 
     @Override
@@ -64,6 +84,7 @@ public class SteakFragment extends Fragment {
             public void onTextChanged(
                     CharSequence s, int start, int before, int count) {
                 mSteak.setTitle(s.toString());
+                updateSteak();
             }
             @Override
             public void afterTextChanged(Editable s) {
@@ -84,6 +105,7 @@ public class SteakFragment extends Fragment {
             public void onTextChanged(
                     CharSequence s, int start, int before, int count) {
                 mSteak.setAddress(s.toString());
+                updateSteak();
             }
             @Override
             public void afterTextChanged(Editable s) {
@@ -104,6 +126,7 @@ public class SteakFragment extends Fragment {
             public void onTextChanged(
                     CharSequence s, int start, int before, int count) {
                 mSteak.setComments(s.toString());
+                updateSteak();
             }
             @Override
             public void afterTextChanged(Editable s) {
@@ -133,6 +156,7 @@ public class SteakFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView,
                                          boolean isChecked) {
                 mSteak.setRecmed(isChecked);
+                updateSteak();
             } });
 
         return v;
@@ -146,8 +170,13 @@ public class SteakFragment extends Fragment {
             Date date = (Date) data
                     .getSerializableExtra(DatePickerFragment.EXTRA_DATE);
             mSteak.setDate(date);
+            updateSteak();
             updateDate();
         }
+    }
+
+    private void updateSteak() {
+        mCallbacks.onSteakUpdated(mSteak);
     }
 
     private void updateDate() {

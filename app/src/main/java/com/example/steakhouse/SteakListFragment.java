@@ -1,6 +1,7 @@
 package com.example.steakhouse;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,6 +21,19 @@ import java.util.List;
 public class SteakListFragment extends Fragment {
     private RecyclerView mSteakRecyclerView;
     private SteakAdapter mAdapter;
+    private Callbacks mCallbacks;
+    /**
+     * Required interface for hosting activities
+     */
+    public interface Callbacks {
+        void onSteakSelected(Steak steak);
+    }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mCallbacks = (Callbacks) context;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -39,7 +53,7 @@ public class SteakListFragment extends Fragment {
         updateUI();
     }
 
-    private void updateUI() {
+    public void updateUI() {
         SteakLab steakLab = SteakLab.get(getActivity());
         List<Steak> steaks = steakLab.getSteaks();
         if (mAdapter == null) {
@@ -81,8 +95,7 @@ public class SteakListFragment extends Fragment {
             Toast.makeText(getActivity(),
                     mSteak.getTitle() + " clicked!", Toast.LENGTH_SHORT)
                     .show();
-            Intent intent = SteakActivity.newIntent(getActivity(), mSteak.getId());
-            startActivity(intent);
+            mCallbacks.onSteakSelected(mSteak);
         }
     }
 
@@ -106,5 +119,9 @@ public class SteakListFragment extends Fragment {
             return mSteaks.size();
         }
     }
-
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = null;
+    }
 }
